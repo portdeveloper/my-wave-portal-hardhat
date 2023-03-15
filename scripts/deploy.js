@@ -7,11 +7,17 @@
 const hre = require("hardhat");
 
 async function main() {
+  const [deployer] = await hre.ethers.getSigners();
+  const accountBalance = await deployer.getBalance();
+
+  console.log("Deploying contracts with account: ", deployer.address);
+  console.log("Account balance: ", accountBalance.toString());
+
   const waveContractFactory = await hre.ethers.getContractFactory("WavePortal");
   const waveContract = await waveContractFactory.deploy();
   await waveContract.deployed();
-  console.log("Contract deployed at address: ", waveContract.address);
-  console.log("Contract deployed by: ", owner.address);
+
+  console.log("WavePortal address: ", waveContract.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
